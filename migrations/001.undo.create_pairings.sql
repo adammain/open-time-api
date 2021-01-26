@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS pairing_legs;
+DROP TABLE IF EXISTS layovers;
+DROP TABLE IF EXISTS pairings;
+DROP TABLE IF EXISTS hotels;
+DROP TABLE IF EXISTS employees;
+DROP TYPE IF EXISTS title;
+
+
