@@ -5,6 +5,8 @@ const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV, CLIENT_ORIGIN } = require('./config')
 
+const pairingsRouter = require('./pairings/pairings-router')
+
 const app = express()
 
 const morganOption = (process.env.NODE_ENV === 'production')
@@ -19,11 +21,10 @@ app.use(
   })
 )
 
-app.get('/api/*', (req, res) => {
-  res.json({ok: true})
-})
+// @TODO Complete pairings endpoint and tests
+app.use('/api/pairings', pairingsRouter)
 
- app.use(function errorHandler(error, req, res, next) {
+app.use(function errorHandler(error, req, res, next) {
   let response
   if (NODE_ENV === 'production') {
     response = { error: { message: 'server error' } }
