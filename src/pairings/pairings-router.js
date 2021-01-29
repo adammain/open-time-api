@@ -36,4 +36,28 @@ pairingsRouter
       .catch(next)
   })
 
-  module.exports = pairingsRouter
+pairingsRouter
+  .route('/:pairing_id')
+  .all((req, res, next) => {
+    PairingsService.getById(
+      req.app.get('db'),
+      req.params.pairing_id
+    )
+      .then(pairing => {
+        if (!pairing) {
+          return res.status(404).json({
+            error: { message: `Pairing doesn't exist` }
+          })
+        }
+        res.pairing = pairing
+        next()
+      })
+      .catch(next)
+  })
+  .get((req, res, next) => {
+    res.json(serializePairing(res.pairing))
+  })
+
+
+
+module.exports = pairingsRouter

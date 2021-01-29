@@ -54,4 +54,40 @@ describe('Pairing Endpoints', () => {
       })
     })
   })
+
+  describe(`GET /api/pairings/:pairing_id`, () => {
+    context(`Given no pairings`, () => {
+      it(`responds with 404`, () => {
+        const pairingId = 123456
+        return supertest(app)
+          .get(`/api/pairings/${pairingId}`)
+          .expect(404, { error: { message: `Pairing doesn't exist` } })
+      })
+    })
+
+    context('Given there are pairings in the database', () => {
+      const testEmployees = makeEmployeesArray()
+      const testPairings = makePairingsArray()
+      const responsePairings = getPairingsResponseArray()
+
+      beforeEach('insert pairings', () => {
+        return db
+          .into('employees')
+          .insert(testEmployees)
+          .then(() => {
+            return db
+              .into('pairings')
+              .insert(testPairings)
+          })
+      })
+
+      it('responds with 200 and the specified pairing', () => {
+        const pairingId = 2
+        const expectedPairing = responsePairings[pairingId - 1]
+        return supertest(app)
+          .get(`/api/pairings/${pairingId}`)
+          .expect(200, expectedPairing)
+      })
+    })
+  })
 })
