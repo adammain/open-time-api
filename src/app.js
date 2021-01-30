@@ -6,8 +6,9 @@ const helmet = require('helmet')
 const { NODE_ENV, CLIENT_ORIGIN } = require('./config')
 
 const employeesRouter = require('./employees/employees-router')
-const pairingsRouter = require('./pairings/pairings-router')
 const hotelsRouter = require('./hotels/hotels-router')
+const pairingsRouter = require('./pairings/pairings-router')
+const layoversRouter = require('./layovers/layovers-router')
 
 const app = express()
 
@@ -27,6 +28,7 @@ app.use(
 app.use('/api/employees', employeesRouter)
 app.use('/api/hotels', hotelsRouter)
 app.use('/api/pairings', pairingsRouter)
+app.use('/api/layovers', layoversRouter)
 
 app.use(function errorHandler(error, req, res, next) {
   let response

@@ -17,9 +17,9 @@ describe('Hotel Endpoints', () => {
 
   after('disconnect from db', () => db.destroy())
 
-  before('clean the table', () => db.raw('TRUNCATE pairing_legs, layovers, pairings, hotels, hotels RESTART IDENTITY CASCADE'))
+  before('clean the table', () => db.raw('TRUNCATE pairing_legs, layovers, pairings, hotels, employees RESTART IDENTITY CASCADE'))
 
-  afterEach('cleanup',() => db.raw('TRUNCATE pairing_legs, layovers, pairings, hotels, hotels RESTART IDENTITY CASCADE'))
+  afterEach('cleanup',() => db.raw('TRUNCATE pairing_legs, layovers, pairings, hotels, employees RESTART IDENTITY CASCADE'))
 
   describe(`GET /api/hotels`, () => {
     context(`Given no hotels`, () => {
