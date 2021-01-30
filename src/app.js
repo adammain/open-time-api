@@ -5,6 +5,7 @@ const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV, CLIENT_ORIGIN } = require('./config')
 
+const employeesRouter = require('./employees/employees-router')
 const pairingsRouter = require('./pairings/pairings-router')
 
 const app = express()
@@ -21,7 +22,8 @@ app.use(
   })
 )
 
-// @TODO Complete pairings endpoint and tests
+// @TODO Complete employees endpoint and tests
+app.use('/api/employees', employeesRouter)
 app.use('/api/pairings', pairingsRouter)
 
 app.use(function errorHandler(error, req, res, next) {
