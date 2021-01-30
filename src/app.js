@@ -9,6 +9,7 @@ const employeesRouter = require('./employees/employees-router')
 const hotelsRouter = require('./hotels/hotels-router')
 const pairingsRouter = require('./pairings/pairings-router')
 const layoversRouter = require('./layovers/layovers-router')
+const pairingLegsRouter = require('./pairing_legs/pairing_legs-router')
 
 const app = express()
 
@@ -29,6 +30,7 @@ app.use('/api/employees', employeesRouter)
 app.use('/api/hotels', hotelsRouter)
 app.use('/api/pairings', pairingsRouter)
 app.use('/api/layovers', layoversRouter)
+app.use('/api/pairing-legs', pairingLegsRouter)
 
 app.use(function errorHandler(error, req, res, next) {
   let response
