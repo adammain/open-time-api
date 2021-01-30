@@ -76,7 +76,7 @@ describe('PairingLeg Endpoints', () => {
     })
   })
 
-  describe(`GET /api/pairingLegs/:pairingLegs_id`, () => {
+  describe(`GET /api/pairing-legs/:pairingLegs_id`, () => {
     context(`Given no pairingLegs`, () => {
       it(`responds with 404`, () => {
         const pairingLegId = 123456
