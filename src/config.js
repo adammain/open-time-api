@@ -3,6 +3,6 @@ module.exports = {
   CLIENT_ORIGIN: 'https://dry-lowlands-01034.herokuapp.com',
   NODE_ENV: process.env.NODE_ENV || 'development',
   API_TOKEN: process.env.API_TOKEN,
-  DB_URL: process.env.DB_URL || 'postgresql://adammain:@localhost/opentime',
-  TEST_DB_URL: process.env.TEST_DB_URL || 'postgresql://adammain:@localhost/blogful-test'
+  DATABASE_URL: process.env.DATABASE_URL || 'postgresql://adammain:@localhost/opentime',
+  TEST_DATABASE_URL: process.env.TEST_DATABASE_URL || 'postgresql://adammain:@localhost/blogful-test'
 }
