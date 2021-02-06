@@ -1,1 +1,1 @@
-TRUNCATE pairing_legs, layovers, pairings, hotels, employees;
+TRUNCATE pairing_legs, layovers, pairings, hotels, employees, schedules;

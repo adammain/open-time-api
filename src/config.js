@@ -1,6 +1,7 @@
 module.exports = {
   PORT: process.env.PORT || 8000,
-  CLIENT_ORIGIN: 'https://dry-lowlands-01034.herokuapp.com',
+  // CLIENT_ORIGIN: 'https://dry-lowlands-01034.herokuapp.com',
+  CLIENT_ORIGIN: 'http://localhost:3000',
   NODE_ENV: process.env.NODE_ENV || 'development',
   API_TOKEN: process.env.API_TOKEN,
   DATABASE_URL: process.env.DATABASE_URL || 'postgresql://adammain:@localhost/opentime',
