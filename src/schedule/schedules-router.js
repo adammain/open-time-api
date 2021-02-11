@@ -12,13 +12,38 @@ const serializeSchedule = schedule => ({
   days_in_month: schedule.days_in_month
 })
 
+const serializePairing = pairing => ({
+  id: pairing.id,
+  pairing_id: pairing.pairing_id,
+  report: pairing.report,
+  captain: pairing.captain,
+  first_officer: pairing.first_officer,
+  pair_start: pairing.pair_start,
+  pair_end: pairing.pair_end,
+  base: pairing.base,
+  time_away_from_base: pairing.time_away_from_base,
+  trip_rig: pairing.trip_rig,
+  total_block: pairing.total_block,
+  total_deadhead: pairing.total_deadhead,
+  total_credit: pairing.total_credit,
+  total_duty: pairing.total_duty,
+  flight_duty_period: pairing.flight_duty_period,
+  time_in_opentime: pairing.time_in_opentime
+})
+
 schedulesRouter
   .route('/')
   .get((req, res, next) => {
+    const empId = req.query.id
     const knexInstance = req.app.get('db')
-    SchedulesService.getAllSchedules(knexInstance)
+    // SchedulesService.getAllSchedules(knexInstance)
+    //   .then(schedule => {
+    //     res.json(schedule.map(serializeSchedule))
+    //   })
+    //   .catch(next)
+    SchedulesService.getEmployeeSchedule(knexInstance, empId)
       .then(schedule => {
-        res.json(schedule.map(serializeSchedule))
+        res.json(schedule.map(serializePairing))
       })
       .catch(next)
   })
