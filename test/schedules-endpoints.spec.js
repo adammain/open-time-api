@@ -78,4 +78,6 @@ describe('Schedule Endpoints', () => {
       })
     })
   })
+
+  // @TODO: Add /api/schedules/:empId endpoint test
 })

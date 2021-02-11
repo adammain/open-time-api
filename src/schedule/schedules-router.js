@@ -36,16 +36,20 @@ schedulesRouter
   .get((req, res, next) => {
     const empId = req.query.id
     const knexInstance = req.app.get('db')
-    // SchedulesService.getAllSchedules(knexInstance)
-    //   .then(schedule => {
-    //     res.json(schedule.map(serializeSchedule))
-    //   })
-    //   .catch(next)
-    SchedulesService.getEmployeeSchedule(knexInstance, empId)
+
+    if (empId) {
+      SchedulesService.getEmployeeSchedule(knexInstance, empId)
       .then(schedule => {
         res.json(schedule.map(serializePairing))
       })
       .catch(next)
+    } else {
+      SchedulesService.getAllSchedules(knexInstance)
+      .then(schedule => {
+        res.json(schedule.map(serializeSchedule))
+      })
+      .catch(next)
+    }
   })
 
 schedulesRouter
