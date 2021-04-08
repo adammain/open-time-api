@@ -14,6 +14,7 @@ const serializePairing = pairing => ({
   first_officer: pairing.first_officer,
   pair_start: pairing.pair_start,
   pair_end: pairing.pair_end,
+  duration: pairing.duration,
   base: pairing.base,
   time_away_from_base: pairing.time_away_from_base,
   trip_rig: pairing.trip_rig,
@@ -39,14 +40,13 @@ pairingsRouter
 pairingsRouter
   .route('/:pairing_id')
   .all((req, res, next) => {
-    PairingsService.getById(
-      req.app.get('db'),
-      req.params.pairing_id
-    )
+    const { pairing_id } = req.params
+    PairingsService.getById(req.app.get('db'), pairing_id)
       .then(pairing => {
         if (!pairing) {
+          logger.error(`Pairing with id ${pairing_id} not found.`)
           return res.status(404).json({
-            error: { message: `Pairing doesn't exist` }
+            error: { message: `Pairing Not Found` }
           })
         }
         res.pairing = pairing
@@ -54,8 +54,39 @@ pairingsRouter
       })
       .catch(next)
   })
-  .get((req, res, next) => {
+  .get((req, res) => {
     res.json(serializePairing(res.pairing))
+  })
+  .patch(jsonParser, (req, res, next) => {
+    // TODO: update for all captains to add pairing
+    console.log("Change Me")
+    const { first_officer } = req.body
+    const pairingToUpdate = { first_officer, time_in_opentime: null }
+
+    const numberOfValues = Object.values(pairingToUpdate).filter(Boolean).length
+    if (numberOfValues === 0) {
+      // logger.error(`Invalid update without required fields`)
+      console.log(req.body)
+      return res.status(400).json({
+        error: {
+          message: `Request body must content either 'first_officer' or 'captain'`
+        }
+      })
+    }
+
+    // const error = getBookmarkValidationError(bookmarkToUpdate)
+
+    // if (error) return res.status(400).send(error)
+
+    PairingsService.updatePairing(
+      req.app.get('db'),
+      req.params.pairing_id,
+      pairingToUpdate
+    )
+      .then(numRowsAffected => {
+        res.status(204).end()
+      })
+      .catch(next)
   })
 
 

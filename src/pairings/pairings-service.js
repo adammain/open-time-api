@@ -9,6 +9,11 @@ const PairingsService = {
       .where('id', id)
       .first()
   },
+  updatePairing(knex, id, newPairingFields) {
+    return knex('pairings')
+      .where({ id })
+      .update(newPairingFields)
+  }
 }
 
 module.exports = PairingsService

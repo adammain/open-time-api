@@ -3,6 +3,8 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
+const bodyParser = require('body-parser')
+const webpush = require('web-push')
 const { NODE_ENV, CLIENT_ORIGIN } = require('./config')
 
 const employeesRouter = require('./employees/employees-router')
@@ -25,14 +27,35 @@ app.use(
       origin: CLIENT_ORIGIN
   })
 )
+app.use(bodyParser.json())
 
-// @TODO Complete employees endpoint and tests
+webpush.setVapidDetails(process.env.WEB_PUSH_CONTACT, process.env.PUBLIC_VAPID_KEY, process.env.PRIVATE_VAPID_KEY)
+
+// @TODO modify schedules endpoint so it returns only employees schedules
+// @TODO add calendar endpoint to get cal days for each cal month
 app.use('/api/employees', employeesRouter)
 app.use('/api/hotels', hotelsRouter)
 app.use('/api/pairings', pairingsRouter)
 app.use('/api/layovers', layoversRouter)
 app.use('/api/pairing-legs', pairingLegsRouter)
 app.use('/api/schedules', schedulesRouter)
+
+app.post('/notifications/subscribe', (req, res) => {
+  const subscription = req.body
+
+  console.log(subscription)
+
+  const payload = JSON.stringify({
+    title: 'Hello!',
+    body: 'It works.',
+  })
+
+  webpush.sendNotification(subscription, payload)
+    .then(result => console.log(result))
+    .catch(e => console.log(e.stack))
+
+  res.status(200).json({'success': true})
+})
 
 app.use(function errorHandler(error, req, res, next) {
   let response

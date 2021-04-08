@@ -21,6 +21,7 @@ CREATE TABLE pairings (
   first_officer INTEGER REFERENCES employees(employee_number),
   pair_start DATE NOT NULL,
   pair_end DATE NOT NULL,
+  duration INTEGER NOT NULL,
   base TEXT NOT NULL,
   time_away_from_base INTERVAL HOUR TO MINUTE NOT NULL,
   trip_rig INTERVAL HOUR TO MINUTE,
